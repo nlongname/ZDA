@@ -8,13 +8,13 @@ import os
 #I think I'll do one .zda file at a time for simplicity, and have a wrapper
 # with a loop to do more than one if I want
 
-#need to un-hardcode this
-folders = ["gfx","maps","mapses","mapsfr","music","sound","mapsde"]
+folders = [f for f in os.listdir() if not os.path.isfile(f) and f != 'ZDA']
+print(folders)
 
 for fold in folders:
     entries = []
     with open(fold+".zda", "wb") as out:
-        files = os.listdir("./"+fold)
+        files = os.listdir("./"+fold) # consider making this recursive, it just breaks if there are subfolders
         files.sort()
         start = 12+52*len(files)
         out.seek(start) #no header yet, need compression info below
